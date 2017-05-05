@@ -22,7 +22,7 @@ along with nnl.  If not, see <http://www.gnu.org/licenses/>.*/
 #ifdef DELAY_IN_CONN
 
 //global debug switch
-extern bool sequenceDebugOutput;
+//bool sequenceDebugOutput=false;;
 
 
 PredictionOutputLayer::PredictionOutputLayer(const string& nam, vector<string>& criteria, Layer* inputLay, bool delCumActs, PredictionOutputLayer* firstPredLayer):
@@ -179,6 +179,7 @@ double PredictionOutputLayer::injectSequenceErrors(map<const string, pair<int,do
 	}
 	
 #ifndef _WIN32
+    /*
 	if (sequenceDebugOutput)
 	{
 		cout << "sumSquaresErr " <<  sumSquaresErr << endl;
@@ -189,6 +190,7 @@ double PredictionOutputLayer::injectSequenceErrors(map<const string, pair<int,do
 			cout << "cumulativeRmsErr " <<  cumRmsErr << endl;
 		}
 	}
+    */
 #endif
 
 	//store errors in map

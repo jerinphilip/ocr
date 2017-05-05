@@ -1,21 +1,90 @@
 #include "api.h"
-#include <vector>
-#include <string>
-#include <iostream>
 using namespace std;
 
-int main(){
-    vector<float> input;
-    float x;
-    ifstream inputfs("input.txt");
-    while(inputfs >> x ){
-        input.push_back(x);
-    }
-    cout<<"Loaded input"<<endl;
 
-    NetAPI api("cvit_ocr_weights.xml", "lookup.txt");
-    string S = api.recognize(&input[0], input.size()/32, 32);
-    cout << S << endl;
-    return 0;
+NetAPI::NetAPI (const char *weights_f, const char *lookup_f) {
+    weights_file = weights_f;
+    lookup_file = lookup_f;
+    initialize_dimensions();
+    load_weights_file();
+    XMLPlatformUtils::Initialize();
 }
 
+void NetAPI::load_weights_file(){
+    try {
+        XMLPlatformUtils::Initialize();
+    } catch (const XMLException& e) {
+        char *message = XMLString::transcode(e.getMessage());
+        cerr<<"error: xerces: "<<endl;
+        cerr<< message << endl;
+        XMLString::release(&message);
+    }
+
+
+    XercesDOMParser parser;
+    parser.setDoNamespaces(true);
+    parser.setValidationConstraintFatal(true);
+    parser.setExitOnFirstFatalError(false);
+    parser.setIncludeIgnorableWhitespace(false);
+
+
+    /* Try reading from file. */
+    try {
+        ifstream metadata(weights_file);
+        LocalFileInputSource source(XMLString::transcode(weights_file));
+        parser.parse(source);
+    } catch (const DOMException& e){
+        cerr << "Error loading XML\n";
+    }
+
+
+    document = parser.getDocument();
+    root = document->getDocumentElement();
+
+    netData = (DOMElement*)(root->
+            getElementsByTagName(XMLString::transcode("Net"))
+            ->item(0));
+
+    exportData = (DOMElement*)(root->
+            getElementsByTagName(XMLString::transcode("ExportedData"))
+            ->item(0));
+
+    vector<string> criteria;
+    net = (NDimNet*)NetMaker::makeNet(netData, dimensions, 
+            criteria);
+    net->build();
+    output = (TranscriptionOutputLayer*)(net->outputLayer);
+    DataExportHandler::instance().load(exportData);
+
+}
+
+
+void NetAPI::initialize_dimensions(){
+    dimensions.numDims = 1;
+    dimensions.inputPattSize = 32;
+    dimensions.targetPattSize = 0;
+    vector<string> labels;
+    string label;
+    ifstream lookup(lookup_file);
+    while (lookup >> label){
+        labels.push_back(label);
+    }
+    dimensions.labels = labels;
+}
+
+string NetAPI::recognize(float *inputs, int width, int height){
+    sequence.dimensions = {width};
+    sequence.size = width;
+    sequence.inputs = inputs;
+
+    net->feedForward(sequence);
+    vector<int> recognisedIndices;
+    string recognized;
+    output->getMostProbableString(recognisedIndices);
+    for(vector<int>::iterator p=recognisedIndices.begin(); 
+            p!=recognisedIndices.end(); p++){
+
+        recognized += dimensions.labels[*p];
+    }
+    return recognized;
+}

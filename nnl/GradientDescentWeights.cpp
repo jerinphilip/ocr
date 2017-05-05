@@ -22,7 +22,7 @@ along with nnl.  If not, see <http://www.gnu.org/licenses/>.*/
 #include "DataExporter.h"
 
 //global debug switch
-extern bool sequenceDebugOutput;
+//bool sequenceDebugOutput=false;;
 //global debug switch
 //bool sequenceDebugOutput = false;
 
@@ -42,6 +42,7 @@ void GradientDescentWeights::updateWeights(double learnRate, double momentum)
 	vector<double>& weights = trainableWeights->getTrainableWeights();
 
 #ifndef _WIN32
+    /*
 	if (sequenceDebugOutput)
 	{
 		//print max and min weights
@@ -59,6 +60,7 @@ void GradientDescentWeights::updateWeights(double learnRate, double momentum)
 		cout << " abs mean " << absMean<vector<double>::iterator, double>(weights.begin(), weights.end());
 		cout << endl;
 	}
+    */
 #endif
 
 	//apply gradient descent with momentum
@@ -77,6 +79,7 @@ void GradientDescentWeights::updateWeights(double learnRate, double momentum)
 	}
 
 #ifndef _WIN32
+    /*
 	if (sequenceDebugOutput)
 	{
 		cout << " new weights: max " << *max_element(weights.begin(), weights.end());
@@ -86,6 +89,7 @@ void GradientDescentWeights::updateWeights(double learnRate, double momentum)
 		cout << " abs mean " << absMean<vector<double>::iterator, double>(weights.begin(), weights.end());
 		cout << endl;
 	}
+    */
 #endif
 }	
 

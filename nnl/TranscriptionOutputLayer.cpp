@@ -26,7 +26,7 @@ along with nnl.  If not, see <http://www.gnu.org/licenses/>.*/
 
 
 //global debug switch
-extern bool sequenceDebugOutput;
+//bool sequenceDebugOutput=false;;
 
 TranscriptionOutputLayer::TranscriptionOutputLayer(const string& nam, const vector<string>& lab, int numDims, 
 					vector<string>& criteria, const map<const string, int>& labelNumbers, 
@@ -451,6 +451,7 @@ double TranscriptionOutputLayer::injectSequenceErrors(map<const string, pair<int
 		getMostProbableString(outputLabelSeq);
 
 #ifndef _WIN32
+        /*
 		if (sequenceDebugOutput)
 		{
 			//debug code
@@ -461,6 +462,7 @@ double TranscriptionOutputLayer::injectSequenceErrors(map<const string, pair<int
 			}
 			cout << endl;
 		}
+        */
 #endif
 
 		if (wordDecoder)
@@ -492,6 +494,7 @@ double TranscriptionOutputLayer::injectSequenceErrors(map<const string, pair<int
 
 		//TODO substitution confusion matrix, insertion and deletion lists
 #ifndef _WIN32
+        /*
 		if (sequenceDebugOutput)
 		{
 			cout << "ctcMlError " <<  ctcMlError << endl;
@@ -500,6 +503,7 @@ double TranscriptionOutputLayer::injectSequenceErrors(map<const string, pair<int
 			cout << "deletions " <<  deletions << endl;
 			cout << "substitutions " <<  substitutions << endl;
 		}
+        */
 #endif
 		return ctcMlError;
 	}

@@ -57,7 +57,7 @@ protected:
 
 	DataExportHandler(){}
 	DataExportHandler(const DataExportHandler&){}
-	DataExportHandler& operator= (const DataExportHandler&){}
+	//DataExportHandler& operator= (const DataExportHandler&){}
 
 public: 
 

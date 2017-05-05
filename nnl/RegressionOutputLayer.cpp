@@ -24,7 +24,7 @@ along with nnl.  If not, see <http://www.gnu.org/licenses/>.*/
 
 
 //global debug switch
-extern bool sequenceDebugOutput;
+//bool sequenceDebugOutput=false;;
 
 RegressionOutputLayer::RegressionOutputLayer(const string& nam, int siz, vector<string>& criteria):
 		name(nam),
@@ -123,10 +123,12 @@ double RegressionOutputLayer::injectSequenceErrors(map<const string, pair<int,do
 	double sumSquaresErr = 0.5 * rmsErr;
 
 #ifndef _WIN32
+    /*
 		if (sequenceDebugOutput)
 		{
 			cout << "sumSquaresErr " <<  sumSquaresErr << endl;
 		}
+    */
 #endif
 
 	//store errors in map

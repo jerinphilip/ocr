@@ -24,7 +24,7 @@ along with nnl.  If not, see <http://www.gnu.org/licenses/>.*/
 #include "Helpers.h"
 
 //global debug switch
-extern bool sequenceDebugOutput;
+//bool sequenceDebugOutput=false;;
 
 SequenceClassificationOutputLayer::SequenceClassificationOutputLayer(const string& nam, int numClasses, const vector<string>& lab, vector<string>& criteria):
 		labels(lab),
@@ -153,6 +153,7 @@ double SequenceClassificationOutputLayer::injectSequenceErrors(map<const string,
 	}
 
 #ifndef _WIN32
+    /*
 	if (sequenceDebugOutput)
 	{
 		cout << "crossEntropyError " <<  crossEntropyErr << endl;
@@ -160,6 +161,7 @@ double SequenceClassificationOutputLayer::injectSequenceErrors(map<const string,
 		cout << "output class " <<  outputClass << endl;
 		cout << "correct " <<  correct << endl;
 	}
+    */
 #endif
 
     /*  Freshly commented out

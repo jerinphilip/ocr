@@ -24,7 +24,7 @@ along with nnl.  If not, see <http://www.gnu.org/licenses/>.*/
 
 
 //global debug switch
-extern bool sequenceDebugOutput;
+//bool sequenceDebugOutput=false;;
 
 SequenceMIAOutputLayer::SequenceMIAOutputLayer(const string& nam, const vector<string>& lab, vector<string>& criteria):
 		name(nam),
@@ -187,6 +187,7 @@ double SequenceMIAOutputLayer::injectSequenceErrors(map<const string, pair<int, 
 	}
 	
 #ifndef _WIN32
+    /*
 	if (sequenceDebugOutput)
 	{
 		//debug code
@@ -227,6 +228,7 @@ double SequenceMIAOutputLayer::injectSequenceErrors(map<const string, pair<int, 
 		cout << "miaError " << seqErr << endl;
 		cout << "featureErrors " << insertions + deletions << endl;
 	}
+    */
 #endif
 	return seqErr;
 }

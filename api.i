@@ -1,3 +1,5 @@
+%module ocr
+%{
 #include <iostream>
 #include <string> 
 #include <list> 
@@ -30,29 +32,8 @@
 #include "nnl/Typedefs.h"
 #include "nnl/TranscriptionOutputLayer.h"
 #include <stdlib.h>
-using namespace std;
-//using namespace xercesc;
+#include "api.h"
 
+%}
 
-
-class NetAPI {
-    private:
-        DataDimensions dimensions;
-        DataSequence sequence;
-        NDimNet *net;
-        TranscriptionOutputLayer *output;
-
-        const char *weights_file;
-        const char *lookup_file;
-
-        DOMElement *root, *netData, *exportData; 
-        DOMDocument *document;
-
-    public:
-        NetAPI (const char *weights_f, const char *lookup_f);
-        void load_weights_file();
-        void initialize_dimensions();
-        string recognize(float *inputs, int width, int height);
-};
-
-
+%include "api.h"

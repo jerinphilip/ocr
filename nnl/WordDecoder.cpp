@@ -25,7 +25,7 @@ along with nnl.  If not, see <http://www.gnu.org/licenses/>.*/
 #include "StringAlignment.h"
 #include "Typedefs.h"
 
-extern bool sequenceDebugOutput;
+//bool sequenceDebugOutput=false;;
 
 WordDecoder::WordDecoder(ifstream& dictFile, const map<const string, int>& labelNumbers, int blankUnit, 
 						 const vector<string>& lab, const string& wd, int os, const string& bigramFilename,
@@ -281,6 +281,7 @@ void WordDecoder::decode(/*vector<int>& outputSeq,*/ map<const string, pair<int,
 	}
 
 #ifndef _WIN32
+    /*
 	if (sequenceDebugOutput)
 	{
 		cout << "target word string:" << endl;
@@ -297,6 +298,7 @@ void WordDecoder::decode(/*vector<int>& outputSeq,*/ map<const string, pair<int,
 		}
 		cout << endl;
 	}
+    */
 #endif
 
 	/*cout << "seq length " << totalTime << endl;
@@ -435,11 +437,13 @@ void WordDecoder::decode(/*vector<int>& outputSeq,*/ map<const string, pair<int,
 	bestTheToken->print(wordStream);
 
 #ifndef _WIN32
+    /*
 	if (sequenceDebugOutput)
 	{
 		seconds = time (NULL) - seconds;
 		cout << (int)seconds << " seconds" << endl;
 	}
+    */
 #endif
 
 	vector<int> bestWordSequence;
@@ -451,6 +455,7 @@ void WordDecoder::decode(/*vector<int>& outputSeq,*/ map<const string, pair<int,
 	double deletions = alignment.getDeletions();
 
 #ifndef _WIN32
+    /*
 	if (sequenceDebugOutput)
 	{
 		vector<string> bestTranscriptions;
@@ -475,6 +480,7 @@ void WordDecoder::decode(/*vector<int>& outputSeq,*/ map<const string, pair<int,
 			}
 		}
 	}
+    */
 #endif
 
 	//store errors in map

@@ -53,9 +53,9 @@ struct DataSequence
 	string targetString;
 	string wordTargetString;
 	DataSequence():
+			size(0),
 			inputs(0),
-			targetPatterns(0),
-			size(0)
+			targetPatterns(0)
 	{
 	}
 	friend bool operator == (const DataSequence& ds1, const DataSequence& ds2)
@@ -65,7 +65,7 @@ struct DataSequence
 			&& ds1.targetClasses == ds2.targetClasses 
 			&& ds1.targetSeq == ds2.targetSeq
 			&& equal(ds1.inputs, ds1.inputs + ds1.size, ds2.inputs)
-			&& ((ds1.targetPatterns == ds2.targetPatterns == 0) 
+			&& (((ds1.targetPatterns == ds2.targetPatterns) == 0) 
 				||  equal(ds1.targetPatterns, ds1.targetPatterns + ds1.size, ds2.targetPatterns)));
 	}
 };	

@@ -32,7 +32,7 @@ along with nnl.  If not, see <http://www.gnu.org/licenses/>.*/
 static int blankUnit;
 #endif
 //global debug switch
-extern bool sequenceDebugOutput;
+//bool sequenceDebugOutput=false;;
 
 LabellingOutputLayer::LabellingOutputLayer(const string& nam, const vector<string>& lab, int numDims, vector<string>& criteria):
 		name(nam),
@@ -331,6 +331,7 @@ double LabellingOutputLayer::injectSequenceErrors(map<const string, pair<int,dou
 		}
 
 #ifndef _WIN32
+        /*
 		if (sequenceDebugOutput)
 		{
 			//debug code
@@ -345,6 +346,7 @@ double LabellingOutputLayer::injectSequenceErrors(map<const string, pair<int,dou
 			}
 			cout << endl;
 		}
+        */
 #endif
 
 		//calculate labelling errors
@@ -380,6 +382,7 @@ double LabellingOutputLayer::injectSequenceErrors(map<const string, pair<int,dou
 
 		//TODO substitution confusion matrix, insertion and deletion lists
 #ifndef _WIN32
+        /*
 		if (sequenceDebugOutput)
 		{
 			cout << "labMlError " <<  labMlError << endl;
@@ -387,6 +390,7 @@ double LabellingOutputLayer::injectSequenceErrors(map<const string, pair<int,dou
 			cout << "insertions " <<  insertions << endl;
 			cout << "deletions " <<  deletions << endl;
 		}
+        */
 #endif
 		return labMlError;
 	}

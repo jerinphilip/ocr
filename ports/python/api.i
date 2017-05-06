@@ -1,4 +1,4 @@
-%module ocr
+%module pyocr
 
 %{
 #include "ocr/api.h"

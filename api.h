@@ -52,7 +52,7 @@ class NetAPI {
         NetAPI (const char *weights_f, const char *lookup_f);
         void load_weights_file();
         void initialize_dimensions();
-        string recognize(float *inputs, int width, int height);
+        string recognize(vector<float> &inputs, int width, int height);
 };
 
 

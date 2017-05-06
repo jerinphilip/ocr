@@ -72,10 +72,10 @@ void NetAPI::initialize_dimensions(){
     dimensions.labels = labels;
 }
 
-string NetAPI::recognize(float *inputs, int width, int height){
+string NetAPI::recognize(vector<float> &inputs, int width, int height){
     sequence.dimensions = {width};
     sequence.size = width;
-    sequence.inputs = inputs;
+    sequence.inputs = &inputs[0];
 
     net->feedForward(sequence);
     vector<int> recognisedIndices;

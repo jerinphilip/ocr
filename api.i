@@ -1,4 +1,5 @@
 %module ocr
+
 %{
 #include <iostream>
 #include <string> 
@@ -33,7 +34,16 @@
 #include "nnl/TranscriptionOutputLayer.h"
 #include <stdlib.h>
 #include "api.h"
+using namespace std;
 
 %}
 
+%include "std_vector.i"
+%include "std_string.i"
+namespace std
+{
+    %template(FloatVector) vector<float>;
+}
+
 %include "api.h"
+

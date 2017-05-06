@@ -14,7 +14,7 @@ int main(){
     cout<<"Loaded input"<<endl;
 
     NetAPI api("cvit_ocr_weights.xml", "lookup.txt");
-    string S = api.recognize(&input[0], input.size()/32, 32);
+    string S = api.recognize(input, input.size()/32, 32);
     cout << S << endl;
     return 0;
 }

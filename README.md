@@ -23,5 +23,18 @@ make
   generated for interface.
 
 
+# Interfaces
 
+## Python
+
+Post building, put `ports/python/test.py` inside the same folder as
+`pyocr.py` and `_pyocr.so`.
+
+In the directory run
+
+```bash
+    LD_LIBRARY_PATH=. python test.py
+```
+
+Take a look at `test.py`, for figuring out how to use the API.
 

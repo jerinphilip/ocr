@@ -272,6 +272,119 @@ class FloatVector(_object):
 FloatVector_swigregister = _ocr.FloatVector_swigregister
 FloatVector_swigregister(FloatVector)
 
+class StringVector(_object):
+    __swig_setmethods__ = {}
+    __setattr__ = lambda self, name, value: _swig_setattr(self, StringVector, name, value)
+    __swig_getmethods__ = {}
+    __getattr__ = lambda self, name: _swig_getattr(self, StringVector, name)
+    __repr__ = _swig_repr
+
+    def iterator(self):
+        return _ocr.StringVector_iterator(self)
+    def __iter__(self):
+        return self.iterator()
+
+    def __nonzero__(self):
+        return _ocr.StringVector___nonzero__(self)
+
+    def __bool__(self):
+        return _ocr.StringVector___bool__(self)
+
+    def __len__(self):
+        return _ocr.StringVector___len__(self)
+
+    def __getslice__(self, i, j):
+        return _ocr.StringVector___getslice__(self, i, j)
+
+    def __setslice__(self, *args):
+        return _ocr.StringVector___setslice__(self, *args)
+
+    def __delslice__(self, i, j):
+        return _ocr.StringVector___delslice__(self, i, j)
+
+    def __delitem__(self, *args):
+        return _ocr.StringVector___delitem__(self, *args)
+
+    def __getitem__(self, *args):
+        return _ocr.StringVector___getitem__(self, *args)
+
+    def __setitem__(self, *args):
+        return _ocr.StringVector___setitem__(self, *args)
+
+    def pop(self):
+        return _ocr.StringVector_pop(self)
+
+    def append(self, x):
+        return _ocr.StringVector_append(self, x)
+
+    def empty(self):
+        return _ocr.StringVector_empty(self)
+
+    def size(self):
+        return _ocr.StringVector_size(self)
+
+    def swap(self, v):
+        return _ocr.StringVector_swap(self, v)
+
+    def begin(self):
+        return _ocr.StringVector_begin(self)
+
+    def end(self):
+        return _ocr.StringVector_end(self)
+
+    def rbegin(self):
+        return _ocr.StringVector_rbegin(self)
+
+    def rend(self):
+        return _ocr.StringVector_rend(self)
+
+    def clear(self):
+        return _ocr.StringVector_clear(self)
+
+    def get_allocator(self):
+        return _ocr.StringVector_get_allocator(self)
+
+    def pop_back(self):
+        return _ocr.StringVector_pop_back(self)
+
+    def erase(self, *args):
+        return _ocr.StringVector_erase(self, *args)
+
+    def __init__(self, *args):
+        this = _ocr.new_StringVector(*args)
+        try:
+            self.this.append(this)
+        except __builtin__.Exception:
+            self.this = this
+
+    def push_back(self, x):
+        return _ocr.StringVector_push_back(self, x)
+
+    def front(self):
+        return _ocr.StringVector_front(self)
+
+    def back(self):
+        return _ocr.StringVector_back(self)
+
+    def assign(self, n, x):
+        return _ocr.StringVector_assign(self, n, x)
+
+    def resize(self, *args):
+        return _ocr.StringVector_resize(self, *args)
+
+    def insert(self, *args):
+        return _ocr.StringVector_insert(self, *args)
+
+    def reserve(self, n):
+        return _ocr.StringVector_reserve(self, n)
+
+    def capacity(self):
+        return _ocr.StringVector_capacity(self)
+    __swig_destroy__ = _ocr.delete_StringVector
+    __del__ = lambda self: None
+StringVector_swigregister = _ocr.StringVector_swigregister
+StringVector_swigregister(StringVector)
+
 class NetAPI(_object):
     __swig_setmethods__ = {}
     __setattr__ = lambda self, name, value: _swig_setattr(self, NetAPI, name, value)

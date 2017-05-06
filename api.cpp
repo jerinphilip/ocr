@@ -72,19 +72,18 @@ void NetAPI::initialize_dimensions(){
     dimensions.labels = labels;
 }
 
-string NetAPI::recognize(vector<float> &inputs, int width, int height){
+vector<string> NetAPI::recognize(vector<float> &inputs, int width, int height){
     sequence.dimensions = {width};
     sequence.size = width;
     sequence.inputs = &inputs[0];
 
     net->feedForward(sequence);
     vector<int> recognisedIndices;
-    string recognized;
     output->getMostProbableString(recognisedIndices);
+    vector<string> recognized;
     for(vector<int>::iterator p=recognisedIndices.begin(); 
             p!=recognisedIndices.end(); p++){
-
-        recognized += dimensions.labels[*p];
+        recognized.push_back(dimensions.labels[*p]);
     }
     return recognized;
 }

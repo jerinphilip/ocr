@@ -38,11 +38,15 @@ using namespace std;
 
 %}
 
+/*
 %include "std_vector.i"
 %include "std_string.i"
+*/
+%include "stl.i"
 namespace std
 {
     %template(FloatVector) vector<float>;
+    %template(StringVector) vector<string>;
 }
 
 %include "api.h"

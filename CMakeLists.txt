@@ -30,7 +30,8 @@ set_property(SOURCE ports/python/api.i PROPERTY CPLUSPLUS ON)
 
 # libocr.so Containing just the API.
 
-SWIG_ADD_MODULE(pyocr python ports/python/api.i ocr/api.cpp)
+#SWIG_ADD_MODULE(pyocr python ports/python/api.i ocr/api.cpp)
+SWIG_ADD_LIBRARY(pyocr TYPE SHARED LANGUAGE python SOURCES ports/python/api.i ocr/api.cpp)
 SWIG_LINK_LIBRARIES(pyocr ocr nnl ${XercesC_LIBRARIES} ${PYTHON_LIBRARIES})
 
 # Java Stuff

@@ -61,6 +61,6 @@ class NetAPI {
         void initialize_dimensions();
         vector<DataSequence> generateSequences(VecVecFloat &,
                 VecVecInt &);
-        vector<string> recognize(VecFloat &);
+        vector<string> test(VecFloat &);
         VecFloat train(VecVecFloat &, VecVecInt &);
 };

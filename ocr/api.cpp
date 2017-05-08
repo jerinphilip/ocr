@@ -75,7 +75,7 @@ void NetAPI::initialize_dimensions(){
 }
 
 
-vector<string> NetAPI::recognize(vector<float> &inputs){
+vector<string> NetAPI::test(vector<float> &inputs){
     int height = 32;
     int width = (int)inputs.size()/height;
     sequence.dimensions.push_back(width);

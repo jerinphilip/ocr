@@ -28,7 +28,7 @@ int main(){
         cout << endl;
     }
     
-    vector<string> S = api.recognize(input);
+    vector<string> S = api.test(input);
     for (vector<string>::iterator s = S.begin();
             s != S.end(); s++)
         cout << *s << endl;

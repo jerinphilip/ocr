@@ -482,7 +482,6 @@ double TranscriptionOutputLayer::injectSequenceErrors(map<const string, pair<int
 
 		//store errors in map
 		double normLabelErrorRate = (double)labelErr / (double)targetLength;
-        /* Freshly commented out.
 		errorMap["normLabelErrorRate"] += make_pair<int,double>(1, normLabelErrorRate);
 		errorMap["substitutions"] += make_pair<int,double>(targetLength, substitutions);
 		errorMap["insertions"] += make_pair<int,double>(targetLength, insertions);
@@ -490,7 +489,6 @@ double TranscriptionOutputLayer::injectSequenceErrors(map<const string, pair<int
 		errorMap["labelErrorRate"] += make_pair<int,double>(targetLength, labelErr);
 		errorMap["seqErrorRate"] += make_pair<int,double>(1, (labelErr > 0));
 		errorMap["ctcMlError"] += make_pair<int,double>(1, ctcMlError);
-        */
 
 		//TODO substitution confusion matrix, insertion and deletion lists
 #ifndef _WIN32

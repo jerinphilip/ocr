@@ -34,6 +34,12 @@ using namespace std;
 //using namespace xercesc;
 
 
+typedef vector<int> VecInt;
+typedef vector<float> VecFloat;
+typedef vector<VecInt> VecVecInt;
+typedef vector<VecFloat> VecVecFloat;
+typedef map<const string, pair<int, double> > errorMapType;
+
 
 class NetAPI {
     private:
@@ -41,6 +47,7 @@ class NetAPI {
         DataSequence sequence;
         NDimNet *net;
         TranscriptionOutputLayer *output;
+        GradientFollower* gradientFollower;
 
         const char *weights_file;
         const char *lookup_file;
@@ -52,5 +59,8 @@ class NetAPI {
         NetAPI (const char *weights_f, const char *lookup_f);
         void load_weights_file();
         void initialize_dimensions();
-        vector<string> recognize(vector<float> &inputs);
+        vector<DataSequence> generateSequences(VecVecFloat &,
+                VecVecInt &);
+        vector<string> recognize(VecFloat &);
+        void train(VecVecFloat &, VecVecInt &);
 };

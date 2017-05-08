@@ -56,6 +56,8 @@ void NetAPI::load_weights_file(){
     output = (TranscriptionOutputLayer*)(net->outputLayer);
     DataExportHandler::instance().load(exportData);
 
+    gradientFollower = GradientFollowerMaker::makeStdGradientFollower();
+
 }
 
 
@@ -72,10 +74,11 @@ void NetAPI::initialize_dimensions(){
     dimensions.labels = labels;
 }
 
+
 vector<string> NetAPI::recognize(vector<float> &inputs){
     int height = 32;
     int width = (int)inputs.size()/height;
-    sequence.dimensions = {width};
+    sequence.dimensions.push_back(width);
     sequence.size = width;
     sequence.inputs = &inputs[0];
 
@@ -88,4 +91,61 @@ vector<string> NetAPI::recognize(vector<float> &inputs){
         recognized.push_back(dimensions.labels[*p]);
     }
     return recognized;
+}
+
+vector<DataSequence> NetAPI::generateSequences(VecVecFloat &inputs, VecVecInt &labels){
+
+    vector<DataSequence> result;
+    int height = 32, width;
+
+    for(int i=0; i <  (int)inputs.size(); i++){
+        vector<float> &input = inputs[i];
+        DataSequence seq;
+        width = (int)input.size()/height;
+        seq.dimensions.push_back(width);
+        seq.size = width;
+        seq.inputs = &input[0];
+        seq.targetClasses = labels[i];
+        result.push_back(seq);
+    }
+    return result;
+}
+
+void NetAPI::train(VecVecFloat &inputs, VecVecInt &labels){
+    vector<DataSequence> sequences;
+    sequences = generateSequences(inputs, labels);
+
+    int maxEpochs = 200, epoch=0;
+    bool satisfactory = false;
+    float satisfactoryError = 1e-5;
+
+    errorMapType errorMap;
+
+    while (!satisfactory && epoch < maxEpochs){
+        //for(auto &sequences: sequences){
+        cout << "Satisfactory: "<<satisfactory << endl;
+        cout << "Epoch: "<<epoch <<endl;
+        for(vector<DataSequence>::iterator sequence = sequences.begin();
+                sequence != sequences.end();
+                sequence ++ ){
+            cout << "Sequence gradient computing: "<<endl;
+            net->calculateGradient(errorMap, *sequence);
+        }
+
+        for(errorMapType::iterator p = errorMap.begin();
+                p != errorMap.end(); p++){
+            cout << p->first << ": (";
+            cout << (p->second).first << ",";
+            cout << (p->second).second << ")"<<endl;
+        }
+
+        satisfactory = errorMap["ctcMlError"].second < satisfactoryError;
+        cout << "updating, backpropogation"<<endl;
+        cout << "----" <<endl;
+        gradientFollower->updateWeights();
+        gradientFollower->resetDerivs();
+        errorMap.clear();
+        epoch += 1;
+    }
+
 }

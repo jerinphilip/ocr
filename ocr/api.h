@@ -62,5 +62,5 @@ class NetAPI {
         vector<DataSequence> generateSequences(VecVecFloat &,
                 VecVecInt &);
         vector<string> recognize(VecFloat &);
-        void train(VecVecFloat &, VecVecInt &);
+        VecFloat train(VecVecFloat &, VecVecInt &);
 };

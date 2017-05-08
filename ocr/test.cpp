@@ -16,14 +16,19 @@ int main(){
     sequences.push_back(input);
     //cout<<weights_f<<" "<<lookup_f<<endl;
     NetAPI api("../etc/cvit_ocr_weights.xml", "../etc/lookup.txt");
-    vector<string> S = api.recognize(input);
     vector<int> expected;
     expected.push_back(84);
     expected.push_back(38);
     expected.push_back(12);
     VecVecInt labels;
     labels.push_back(expected);
-    api.train(sequences, labels);
+    VecFloat errors = api.train(sequences, labels);
+    for(int i=0; i<(int)sequences.size(); i++){
+        cout << i+1 <<" error = " << errors[i];
+        cout << endl;
+    }
+    
+    vector<string> S = api.recognize(input);
     for (vector<string>::iterator s = S.begin();
             s != S.end(); s++)
         cout << *s << endl;

@@ -15,22 +15,28 @@ def display_img(inputs):
     cv2.imshow("img", img)
     cv2.waitKey(0)
 
+ocr = GravesOCR(
+        "../etc/cvit_ocr_weights.xml",  # Weights file
+        "../etc/lookup.txt")
 
 inputs = list(map(float, open("../etc/input.txt").read().strip().split()))
+
+print(inputs, len(inputs))
+recognized = ocr.test(inputs)
+print("Recognized:", ''.join(map(convert, recognized)))
 
 #print("Inputs:", inputs)
 sequences = [inputs]
 targets = [[84, 38, 12]]
 
-ocr = GravesOCR(
-        "../etc/cvit_ocr_weights.xml",  # Weights file
-        "../etc/lookup.txt")
 
 errors = ocr.train(sequences, targets)
+#print(ocr.export())
 
 for i in range(len(errors)):
     print("Error %d: %lf"%(i+1, errors[i]))
 
-recognized = ocr.test(sequences[0])
+#print(sequences[0])
+print(inputs, len(inputs))
+recognized = ocr.test(inputs)
 print("Recognized:", ''.join(map(convert, recognized)))
-

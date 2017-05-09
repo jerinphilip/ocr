@@ -55,6 +55,8 @@ class NetAPI {
         DOMElement *root, *netData, *exportData; 
         DOMDocument *document;
 
+        string netExport;
+
     public:
         NetAPI (const char *weights_f, const char *lookup_f);
         void load_weights_file();
@@ -63,4 +65,5 @@ class NetAPI {
                 VecVecInt &);
         vector<string> test(VecFloat &);
         VecFloat train(VecVecFloat &, VecVecInt &);
+        string exportModel();
 };

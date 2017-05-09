@@ -27,6 +27,10 @@ int main(){
         cout << i+1 <<" error = " << errors[i];
         cout << endl;
     }
+
+    string model = api.exportModel();
+    ofstream modelstream("model.xml");
+    modelstream << model << endl;
     
     vector<string> S = api.test(input);
     for (vector<string>::iterator s = S.begin();

@@ -52,9 +52,14 @@ void NetAPI::load_weights_file(){
     vector<string> criteria;
     net = (NDimNet*)NetMaker::makeNet(netData, dimensions, 
             criteria);
+
     net->build();
     output = (TranscriptionOutputLayer*)(net->outputLayer);
     DataExportHandler::instance().load(exportData);
+
+    stringstream ss;
+    net->save("\t", ss);
+    netExport = ss.str();
 
     gradientFollower = GradientFollowerMaker::makeStdGradientFollower();
 
@@ -78,6 +83,7 @@ void NetAPI::initialize_dimensions(){
 vector<string> NetAPI::test(vector<float> &inputs){
     int height = 32;
     int width = (int)inputs.size()/height;
+    sequence.dimensions.clear();
     sequence.dimensions.push_back(width);
     sequence.size = width;
     sequence.inputs = &inputs[0];
@@ -105,7 +111,7 @@ vector<DataSequence> NetAPI::generateSequences(VecVecFloat &inputs, VecVecInt &l
         seq.dimensions.push_back(width);
         seq.size = width;
         seq.inputs = &input[0];
-        seq.targetClasses = labels[i];
+        seq.targetSeq = labels[i];
         result.push_back(seq);
     }
     return result;
@@ -118,7 +124,7 @@ VecFloat NetAPI::train(VecVecFloat &inputs, VecVecInt &labels){
 
     int maxEpochs = 200, epoch=0;
     bool satisfactory = false;
-    float satisfactoryError = 1e-5;
+    float satisfactoryError = 1e-2;
 
     errorMapType errorMap;
 
@@ -133,6 +139,7 @@ VecFloat NetAPI::train(VecVecFloat &inputs, VecVecInt &labels){
                 sequence ++ ){
             //cout << "Sequence gradient computing: "<<endl;
             net->calculateGradient(errorMap, *sequence);
+            //sequence->print();
         }
 
         /*
@@ -164,4 +171,13 @@ VecFloat NetAPI::train(VecVecFloat &inputs, VecVecInt &labels){
     }
 
     return errors;
+}
+
+string NetAPI::exportModel(){
+    stringstream ss;
+    ss << "<NeuralNet>" <<endl;
+    ss << netExport << endl;
+    DataExportHandler::instance().save("\t", ss);
+    ss << "</NeuralNet>"<<endl;
+    return ss.str();
 }

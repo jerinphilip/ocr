@@ -12,7 +12,6 @@ class GravesOCR:
             fv[i] = sequence[i]
         return fv
 
-
     def test(self, sequence):
         return self.net.test(self.asType(pyocr.FloatVector, sequence))
 
@@ -23,9 +22,12 @@ class GravesOCR:
 
         targetsContainer = pyocr.IntVVector(len(targets))
         for i in range(len(targets)):
-            targets = self.asType(pyocr.IntVector, targets[i])
+            targetsContainer[i] = self.asType(pyocr.IntVector, targets[i])
 
         return self.net.train(sequenceContainer, targetsContainer)
+    
+    def export(self):
+        return self.net.exportModel()
 
     def convert(self, ocr_output):
         codepoint = pyocr_output[1:]

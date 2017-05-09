@@ -68,6 +68,27 @@ struct DataSequence
 			&& (((ds1.targetPatterns == ds2.targetPatterns) == 0) 
 				||  equal(ds1.targetPatterns, ds1.targetPatterns + ds1.size, ds2.targetPatterns)));
 	}
+
+    template <class Type>
+    void aux_vec_print(string name, vector<Type> &v){
+        cout << name << ": [";
+        for(int i=0; i<v.size(); i++){
+            cout << v[i] << ((i==v.size()-1)?"":" ");
+        }
+        cout << "]"<<endl;
+    }
+
+    void print(){
+        aux_vec_print("dimensions", dimensions);
+        aux_vec_print("targetClasses", targetClasses);
+        aux_vec_print("targetSeq", targetSeq);
+        aux_vec_print("labelCounts", labelCounts);
+
+        cout << "size: " << size << endl;
+        cout << "tag: " << tag <<endl;
+        cout << "targetString: "<< targetString << endl;
+        cout << "wordTargetString: "<<wordTargetString << endl;
+    }
 };	
 
 #endif

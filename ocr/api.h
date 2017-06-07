@@ -65,5 +65,6 @@ class NetAPI {
                 VecVecInt &);
         vector<string> test(VecFloat &);
         VecFloat train(VecVecFloat &, VecVecInt &);
+	VecFloat train2(VecVecFloat &, VecVecInt &, int );
         string exportModel();
 };

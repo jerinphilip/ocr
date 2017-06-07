@@ -130,10 +130,10 @@ VecFloat NetAPI::train(VecVecFloat &inputs, VecVecInt &labels){
 
     while (!satisfactory && epoch < maxEpochs){
         //for(auto &sequences: sequences){
-        /*
+        
         cout << "Satisfactory: "<<satisfactory << endl;
         cout << "Epoch: "<<epoch <<endl;
-        */
+        
         for(vector<DataSequence>::iterator sequence = sequences.begin();
                 sequence != sequences.end();
                 sequence ++ ){
@@ -172,6 +172,68 @@ VecFloat NetAPI::train(VecVecFloat &inputs, VecVecInt &labels){
 
     return errors;
 }
+
+VecFloat NetAPI::train2(VecVecFloat &inputs, VecVecInt &labels, int maxEpochs){
+    vector<DataSequence> sequences;
+    sequences = generateSequences(inputs, labels);
+    VecFloat errors;
+
+    //int maxEpochs = 200, 
+    int epoch=0;
+    bool satisfactory = false;
+    float satisfactoryError = 1e-2;
+    int sum=0;
+    errorMapType errorMap;
+    cout << "maxEpochs: "<<maxEpochs << endl;
+    while (!satisfactory && epoch < maxEpochs){
+        //for(auto &sequences: sequences){
+        
+        //cout << "Satisfactory: "<<satisfactory << endl;
+        cout << "Epoch: "<<epoch <<endl;
+        
+        for(vector<DataSequence>::iterator sequence = sequences.begin();
+                sequence != sequences.end();
+                sequence ++ ){
+            sum=sum+1;
+            //cout << "Sequence gradient computing: "<<endl;
+            net->calculateGradient(errorMap, *sequence);
+            //sequence->print();
+        }
+
+        /*
+        for(errorMapType::iterator p = errorMap.begin();
+                p != errorMap.end(); p++){
+            cout << p->first << ": (";
+            cout << (p->second).first << ",";
+            cout << (p->second).second << ")"<<endl;
+        }
+        */
+	//cout << "ctcMLerror rate: "<< errorMap["ctcMlError"].second<<endl ;
+	//cout<< "error map: "<< errorMap["substitutions"]<< endl;
+        
+        satisfactory = errorMap["ctcMlError"].second < satisfactoryError;
+	    cout << errorMap["labelErrorRate"].second<< endl;
+    	cout << "updating, backpropogation"<<endl;
+        cout << "----" <<endl;
+        
+        gradientFollower->updateWeights();
+        gradientFollower->resetDerivs();
+        errorMap.clear();
+        epoch += 1;
+    }
+
+    for(vector<DataSequence>::iterator sequence = sequences.begin();
+            sequence != sequences.end();
+            sequence ++ ){
+        errorMap.clear();
+        net->calculateGradient(errorMap, *sequence);
+        errors.push_back(errorMap["ctcMlError"].second);
+    }
+
+    return errors;
+}
+
+
 
 string NetAPI::exportModel(){
     stringstream ss;
